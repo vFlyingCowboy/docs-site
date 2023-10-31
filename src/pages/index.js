@@ -31,7 +31,7 @@ export default function Home() {
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      description="The Pilot Club (TPC) is a free, friendly, thriving flightsim community. Share your passion for aviation, fly with friends, get support, and more.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
