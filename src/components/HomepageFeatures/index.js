@@ -4,12 +4,11 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
+    title: 'All TPC information in one place',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        No more looking around for information for The Pilot Club Resources! We have brought all of our information here!
       </>
     ),
   },
@@ -18,18 +17,16 @@ const FeatureList = [
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Focus on flying in your simulator and not worrying about trying to find information!
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Everything you need to get started',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+          Everything you need to integrate with our public APIs is here. From documentation to code samples, we've got you covered.
       </>
     ),
   },
