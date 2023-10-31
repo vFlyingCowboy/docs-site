@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'The Pilot Club Documentation',
   tagline: 'The Pilot Club Docs',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/tpc logo.png',
 
   // Set the production url of your site here
   url: 'https://docs.thepilotclub.org',
@@ -81,11 +81,23 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Websites',
             items: [
               {
-                label: 'Server Commands',
-                to: '/docs/discord/server-commands',
+                label: 'The Pilot Club',
+                to: 'https://www.thepilotclub.org/',
+              },
+              {
+                label: 'Flight Crew Portal',
+                to: 'https://flightcrew.thepilotclub.org/',
+              },
+              {
+                label: 'Charters',
+                to: 'https://charters.thepilotclub.org',
+              },
+              {
+                label: 'Flight School',
+                to: 'https://flightschool.thepilotclub.org',
               },
             ],
           },

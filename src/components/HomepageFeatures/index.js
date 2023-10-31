@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 const FeatureList = [
   {
     title: 'All TPC information in one place',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    Svg: require('@site/static/img/undraw_aircraft_re_m05i.svg').default,
     description: (
       <>
         No more looking around for information for The Pilot Club Resources! We have brought all of our information here!
@@ -14,7 +14,7 @@ const FeatureList = [
   },
   {
     title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    Svg: require('@site/static/img/undraw_coding_re_iv62.svg').default,
     description: (
       <>
         Focus on flying in your simulator and not worrying about trying to find information!
@@ -23,7 +23,7 @@ const FeatureList = [
   },
   {
     title: 'Everything you need to get started',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    Svg: require('@site/static/img/undraw_community_re_cyrm.svg').default,
     description: (
       <>
           Everything you need to integrate with our public APIs is here. From documentation to code samples, we've got you covered.
