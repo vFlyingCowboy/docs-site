@@ -25,10 +25,10 @@ const apis = {
  * Aaaaaand here's the magic.
  */
 
-// const {
-//   versionSelector,
-//   versionCrumb,
-// } = require("docusaurus-plugin-openapi-docs/lib/sidebars/utils");
+const {
+  versionSelector,
+  versionCrumb,
+} = require("docusaurus-plugin-openapi-docs/lib/sidebars/utils");
 
 const toPluginConfig = () => {
   const config = {};

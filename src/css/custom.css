@@ -109,8 +109,7 @@
   border-color: var(--ifm-color-secondary-dark);
 }
 
-/* API docs - demo forms */
-.openapi-demo__request-form,
-.openapi-demo__response-container {
+.openapi-explorer__request-form,
+.openapi-explorer__response-container {
   display: none;
 }
