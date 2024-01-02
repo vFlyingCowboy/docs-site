@@ -1,0 +1,376 @@
+openapi: 3.0.3
+info:
+  title: The Pilot Club Flight Crew Portal API
+  version: 1.0.0
+  termsOfService: https://www.thepilotclub.org/legal#TOS
+  contact:
+    email: webdev@thepilotcblub.org
+    name: The Pilot Club Web Development Team
+servers:
+  - url: https://flightcrew.thepilotclub.org/api
+    description: Production
+  - url: https://flightcrew-beta.thepilotclub.org/api
+    description: Beta
+paths:
+  /fbos:
+    get:
+      tags:
+        - Charters FBOs
+      summary: Get All FBOs
+      description: get a list of current FBOs for TPC Charters
+      operationId: getFBOs
+      responses:
+        '200':
+          $ref: '#/components/responses/ListFbosResponse'
+  /fbo/{icao}:
+    get:
+      tags:
+        - Charters FBOs
+      summary: Get FBO
+      description: Returns FBO Details
+      operationId: getFBO
+      parameters:
+        - name: icao
+          in: path
+          description: What is the ICAO of the FBO you are trying to find
+          required: true
+          schema:
+            type: string
+            example: KPDX
+      responses:
+        '200':
+          $ref: '#/components/responses/GetFbosResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+  /sectors:
+    get:
+      tags:
+        - Charters Sectors
+      summary: Get All Sectors
+      description: get a list of current Sectors for TPC Charters
+      operationId: getSectors
+      responses:
+        '200':
+          $ref: '#/components/responses/ListSectorsResponse'
+  /users/get:
+    get:
+      tags:
+        - Users
+      summary: Get Users
+      description: Returns All TPC FCP Users
+      operationId: getUsers
+      responses:
+        '200':
+          $ref: '#/components/responses/ListUsersResponse'
+  /users/find/{discord_id}:
+    get:
+      tags:
+        - Users
+      summary: Get Users Details
+      description: "Returns TPC FCP User Details. 
+      The Following Fields are restricted to authenticated users only: \n\n - id\n- first_name\n- last_name\n- email\n- status"
+      operationId: getUserDetails
+      parameters:
+        - name: discord_id
+          in: path
+          description: Discord ID of User
+          required: true
+          schema:
+            type: string
+            example: 968312697403871232
+      security:
+        - APIKeyAuth: [ ]
+      responses:
+        '200':
+          $ref: '#/components/responses/GetUsersResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+  /users/find/{discord_id}/callsign:
+    get:
+      tags:
+        - Users
+      summary: Get Users Callsign
+      description: Returns TPC FCP Callsign
+      operationId: getUserCallsign
+      parameters:
+        - name: discord_id
+          in: path
+          description: Discord ID of User
+          required: true
+          schema:
+            type: string
+            example: 968312697403871232
+      responses:
+        '200':
+          $ref: '#/components/responses/CallsignUsersResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+
+  /users/finsd/{discord_id}/delete:
+    post:
+      tags:
+        - Users
+      summary: Delete User
+      description: Deletes a User from FCP
+      operationId: deleteUser
+      security:
+        - APIKeyAuth : []
+      parameters:
+        - name: discord_id
+          in: path
+          description: Discord ID of User
+          required: true
+          schema:
+            type: string
+            example: 968312697403871232
+      responses:
+        '200':
+          $ref: '#/components/responses/DeletedUserResponse'
+        '403':
+          $ref: '#/components/responses/UnauthedResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+components:
+
+  securitySchemes:
+    APIKeyAuth:
+      type: apiKey
+      description: API Key
+      in: header
+      name: X-API-KEY
+
+  responses:
+    NotFoundResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotFound'
+    UnauthedResponse:
+      description: Not Authorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Unauthed'
+    ListFbosResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              fbos:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AllFBOs'
+    ListSectorsResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              sectors:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AllSectors'
+    GetFbosResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AllFBOs'
+    ListUsersResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              users:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LimitedUser'
+    GetUsersResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/FullUser'
+    CallsignUsersResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CallsignUser'
+
+    DeletedUserResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CallsignUser'
+  schemas:
+    NotFound:
+      type: object
+      description: Not Found
+      properties:
+        detail:
+          type: string
+          description: Object Not being found
+          example: Not Found
+    Unauthed:
+      type: object
+      description: Not Authorized
+      properties:
+        error:
+          type: string
+          description: Object Not being found
+          example: Incorrect API Key
+    AllFBOs:
+      type: object
+      description: FBO Details
+      properties:
+        icao:
+          type: string
+          description: ICAO of FBO
+          example: KPDX
+        name:
+          type: string
+          description: Name of Airport
+          example: Portland International Airport
+        region:
+          type: string
+          description: Region FBO is in
+          example: North America
+        fuel:
+          type: string
+          description: Fuel Provider for FBO
+          example: TPC
+        focus:
+          type: string
+          description: Type of FBO Focus
+          example: Hub
+        public_notes:
+          type: string
+          description: Notes for General Members
+          example: TPC fuel is running low
+    AllSectors:
+      type: object
+      description: Sector Details
+      properties:
+        start_icao:
+          type: string
+          description: ICAO of Starting Point
+          example: KPDX
+        end_icao:
+          type: string
+          description: ICAO of Ending Point
+          example: KSEA
+        size:
+          type: string
+          description: Size of Route
+          example: Long
+        sector_number:
+          type: integer
+          description: What Sector Number it is
+          example: 1
+    CallsignUser:
+      type: object
+      description: TPC Users Callsign
+      properties:
+        tpc_callsign:
+          type: integer
+          description: TPC Callsign
+          example: 76
+    DeletedUser:
+      type: object
+      description: Success Message of Deleted Member
+      properties:
+        success:
+          type: string
+          description: Success Message
+          example: User Removed
+    LimitedUser:
+      type: object
+      description: Limeted User Details
+      properties:
+        discord_id:
+          type: string
+          description: Discord ID Of User
+          example: 968312697403871232
+        discord_username:
+          type: string
+          description: Discord Username of User
+          example: First Officer Kara
+        callsign:
+          type: integer
+          description: TPC Callsign Of User
+          example: 1234
+        vatsim_cid:
+          type: string
+          description: VATSIM CID of User
+          example: 1234567
+        home_airport:
+          type: string
+          description: Home Airport of User
+          example: KPDX
+        charters_code:
+          type: string
+          description: Charters Code of User
+          example: ATAC
+    FullUser:
+      type: object
+      description: Full User Details
+      properties:
+        id:
+          type: string
+          description: Internal ID for User
+          example: 1f2f9e11-5201-45dd-806e-d465e320297c
+        discord_id:
+          type: string
+          description: Discord ID Of User
+          example: 968312697403871232
+        discord_username:
+          type: string
+          description: Discord Username of User
+          example: First Officer Kara
+        first_name:
+          type: string
+          description: First Name of User
+          example: Kennedy
+        last_name:
+          type: string
+          description: Last Name of User
+          example: Steve
+        callsign:
+          type: integer
+          description: TPC Callsign Of User
+          example: 1234
+        vatsim_cid:
+          type: string
+          description: VATSIM CID of User
+          example: 1234567
+        email:
+          type: string
+          description: Email of User
+          example: staff@thepilotclub.org
+        home_airport:
+          type: string
+          description: Home Airport of User
+          example: KPDX
+        charters_code:
+          type: string
+          description: Charters Code of User
+          example: ATAC
+        bio:
+          type: string
+          description: Bio of User
+          example: I love TPC
+        status:
+          type: string
+          description: Account Status of User
+          example: Active
+

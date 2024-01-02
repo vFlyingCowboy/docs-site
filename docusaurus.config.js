@@ -1,6 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
+const { openApiPluginConfig, navbarDropdown } = require('./apis');
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
@@ -15,11 +16,6 @@ const config = {
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
-
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'the-pilot-club', // Usually your GitHub org/user name.
-  projectName: 'docs-site', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -39,10 +35,10 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/the-pilot-club/docs-site.git/tree/main',
+          docLayoutComponent: "@theme/DocPage",
+          docItemComponent: "@theme/ApiItem",
         },
         blog: false,
         theme: {
@@ -52,11 +48,34 @@ const config = {
     ],
   ],
 
+  plugins: [
+    [
+      'docusaurus-plugin-openapi-docs',
+      /** @type {import('docusaurus-plugin-openapi-docs').PluginOptions} */
+      ({
+        id: 'apiDocs',
+        docsPluginId: 'classic',
+        config: openApiPluginConfig,
+      }),
+    ],
+  ],
+
+  themes: ['docusaurus-theme-openapi-docs'],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
       image: 'img/tpc logo.png',
+      docs: {
+        sidebar: {
+          hideable: true,
+          autoCollapseCategories: true,
+        },
+      },
+      colorMode: {
+        respectPrefersColorScheme: true,
+      },
       navbar: {
         title: 'The Pilot Club Docs',
         logo: {
@@ -65,10 +84,22 @@ const config = {
         },
         items: [
           {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            type: 'doc',
+            docId: 'welcome',
             position: 'left',
             label: 'Docs',
+          },
+          {
+            type: 'dropdown',
+            items: [
+              {
+                to: '/docs/services/apis',
+                label: 'Overview',
+              },
+              ...navbarDropdown,
+            ],
+            position: 'left',
+            label: 'APIs',
           },
           {
             href: 'https://github.com/the-pilot-club',
