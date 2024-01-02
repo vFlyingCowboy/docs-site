@@ -211,7 +211,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/CallsignUser'
+            $ref: '#/components/schemas/DeletedUser'
   schemas:
     NotFound:
       type: object
