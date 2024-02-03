@@ -105,6 +105,37 @@ paths:
           $ref: '#/components/responses/CallsignUsersResponse'
         '404':
           $ref: '#/components/responses/NotFoundResponse'
+  /users/find/{discord_id}/audit-logs/new:
+    post:
+      tags:
+        - Users
+        - Audit Logs
+      summary: Submit a audit log entry for a member
+      description: Adds an audit log entry for a member
+      operationId: addUserAuditLog
+      parameters:
+        - name: discord_id
+          in: path
+          description: Discord ID of User
+          required: true
+          schema:
+            type: string
+            example: 968312697403871232
+      requestBody:
+        description: Request Body for submitting an Audit Log for a member.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuditLog"
+      security:
+        - APIKeyAuth: [ ]
+
+      responses:
+        '200':
+          $ref: '#/components/responses/ListUsersResponse'
+        '208':
+          $ref: '#/components/responses/NotFoundResponse'
+
 
   /users/finsd/{discord_id}/delete:
     post:
@@ -257,6 +288,11 @@ components:
           type: string
           description: Notes for General Members
           example: TPC fuel is running low
+        sectors:
+          type: array
+          description: Lists Sectors attached to FBO
+          items:
+            $ref: '#/components/schemas/AllSectors'
     AllSectors:
       type: object
       description: Sector Details
@@ -293,6 +329,19 @@ components:
           type: string
           description: Success Message
           example: User Removed
+    AuditLog:
+      type: object
+      description: Audit Log Post Request Body
+      properties:
+        submitter:
+          type: string
+          description: Discord Id of Staff Member Submitting Audit Log
+          example: 968312697403871232
+        log:
+          type: string
+          description: What Audit Log will be
+          example: First Officer Kara Kinda sucks not gonna lie
+
     LimitedUser:
       type: object
       description: Limeted User Details
@@ -321,6 +370,16 @@ components:
           type: string
           description: Charters Code of User
           example: ATAC
+        bio:
+          type: string
+          description: Users Bio
+          example: Hello! I like to code this website!
+        aircraftHangar:
+          type: array
+          description: List of aircraft Users Fly
+          items:
+            $ref: '#/components/schemas/AircraftHangar'
+
     FullUser:
       type: object
       description: Full User Details
@@ -373,4 +432,21 @@ components:
           type: string
           description: Account Status of User
           example: Active
+        aircraftHangar:
+          type: array
+          description: List of aircraft Users Fly
+          items:
+            $ref: '#/components/schemas/AircraftHangar'
+    AircraftHangar:
+      type: object
+      description: Aircraft Members Fly
+      properties:
+        icaoCode:
+          type: string
+          description: ICAO Code of Airplane
+          example: V22
+        aircraftName:
+          type: string
+          description: Name of aircraft
+          example: MV-22 Osprey
 
