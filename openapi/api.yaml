@@ -1,0 +1,479 @@
+openapi: 3.0.3
+info:
+  title: The Pilot Club Discord Bot API
+  version: 1.0.0
+  termsOfService: https://www.thepilotclub.org/legal#TOS
+  contact:
+    email: webdev@thepilotcblub.org
+    name: The Pilot Club Web Development Team
+servers:
+  - url: https://api.thepilotclub.org/
+    description: Production
+paths:
+  /quiz/current:
+    get:
+      tags:
+        - Quiz
+      summary: Get Current Question
+      description: This returns the data for the current question
+      operationId: findCurrent
+      responses:
+        '200':
+          $ref: '#/components/responses/QuizResponse'
+  /quiz/random:
+    get:
+      tags:
+        - Quiz
+      summary: Get Random Question
+      description: This returns a random question. For authenticated users, it will over ride the current question.
+      operationId: getRandom
+      security:
+        - APIKey: []
+      responses:
+        '200':
+          $ref: '#/components/responses/QuizResponse'
+  /quiz/all:
+    get:
+      tags:
+        - Quiz
+      summary: Get All Questions
+      description: Returns an Array of all the questions in our database
+      operationId: getAll
+      security:
+        - APIKey: []
+      responses:
+        '200':
+          $ref: '#/components/responses/AllQuizResponse'
+  /quiz/new:
+    post:
+      tags:
+        - Quiz
+      summary: Add New Question
+      description: Adds a new question to the quiz database.
+      operationId: getUserCallsign
+      parameters:
+        - name: discord_id
+          in: path
+          description: Discord ID of User
+          required: true
+          schema:
+            type: string
+            example: 968312697403871232
+      responses:
+        '200':
+          $ref: '#/components/responses/CallsignUsersResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+  /users/new:
+    post:
+      tags:
+        - Users
+      summary: Adds a new user to FCP
+      description: Add a new user to FCP
+      operationId: addUser
+      requestBody:
+        description: Request Body for New Member Add.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewMember"
+      security:
+        - APIKey: [ ]
+      responses:
+        '200':
+          $ref: '#/components/responses/LimitedUsersResponse'
+        '208':
+          $ref: '#/components/responses/AlreadyInFCPResponse'
+  /users/finsd/{discord_id}/delete:
+    delete:
+      tags:
+        - Users
+      summary: Delete User
+      description: Deletes a User from FCP
+      operationId: deleteUser
+      security:
+        - APIKey : []
+      parameters:
+        - name: discord_id
+          in: path
+          description: Discord ID of User
+          required: true
+          schema:
+            type: string
+            example: 968312697403871232
+      responses:
+        '200':
+          $ref: '#/components/responses/DeletedUserResponse'
+        '401':
+          $ref: '#/components/responses/UnauthedResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+  /users/find/{discord_id}/audit-logs/new:
+    post:
+      tags:
+        - Audit Logs
+      summary: Submit a audit log entry for a member
+      description: Adds an audit log entry for a member
+      operationId: addUserAuditLog
+      parameters:
+        - name: discord_id
+          in: path
+          description: Discord ID of User
+          required: true
+          schema:
+            type: string
+            example: 968312697403871232
+      requestBody:
+        description: Request Body for submitting an Audit Log for a member.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuditLog"
+      security:
+        - APIKey: [ ]
+      responses:
+        '202':
+          $ref: '#/components/responses/AuditLogResponse'
+        '401':
+          $ref: '#/components/responses/UnauthedResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+components:
+  securitySchemes:
+    APIKey:
+      type: http
+      description: Bearer Token
+      scheme: bearer
+  responses:
+    NotFoundResponse:
+      description: Resource Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotFound'
+    UnauthedResponse:
+      description: Not Authorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Unauthed'
+    ListFbosResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              fbos:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AllFBOs'
+    ListSectorsResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              sectors:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AllSectors'
+    GetFbosResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AllFBOs'
+    LimitedUsersResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LimitedUser'
+    ListUsersResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              users:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LimitedUser'
+    GetUsersResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/FullUser'
+    CallsignUsersResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CallsignUser'
+
+    DeletedUserResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedUser'
+    AuditLogResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuditLogResponse'
+    AlreadyInFCPResponse:
+      description: User Already In FCP
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AlreadyInFCP'
+  schemas:
+    NotFound:
+      type: object
+      description: Not Found
+      properties:
+        detail:
+          type: string
+          description: Object Not being found
+          example: Not Found
+    Unauthed:
+      type: object
+      description: Not Authorized
+      properties:
+        message:
+          type: string
+          description: Resource has not been authenticated
+          example: Unauthenticated
+    AllFBOs:
+      type: object
+      description: FBO Details
+      properties:
+        icao:
+          type: string
+          description: ICAO of FBO
+          example: KPDX
+        name:
+          type: string
+          description: Name of Airport
+          example: Portland International Airport
+        region:
+          type: string
+          description: Region FBO is in
+          example: North America
+        fuel:
+          type: string
+          description: Fuel Provider for FBO
+          example: TPC
+        focus:
+          type: string
+          description: Type of FBO Focus
+          example: Hub
+        publicNotes:
+          type: string
+          description: Notes for General Members
+          example: TPC fuel is running low
+        sectors:
+          type: array
+          description: Lists Sectors attached to FBO
+          items:
+            $ref: '#/components/schemas/AllSectors'
+    AllSectors:
+      type: object
+      description: Sector Details
+      properties:
+        startIcao:
+          type: string
+          description: ICAO of Starting Point
+          example: KPDX
+        endIcao:
+          type: string
+          description: ICAO of Ending Point
+          example: KSEA
+        size:
+          type: string
+          description: Size of Route
+          example: Long
+        sectorNumber:
+          type: integer
+          description: What Sector Number it is
+          example: 1
+    CallsignUser:
+      type: object
+      description: TPC Users Callsign
+      properties:
+        tpcCallsign:
+          type: integer
+          description: TPC Callsign
+          example: 76
+    DeletedUser:
+      type: object
+      description: Success Message of Deleted Member
+      properties:
+        success:
+          type: string
+          description: Success Message
+          example: User Removed
+    AuditLog:
+      type: object
+      description: Audit Log Post Request Body
+      properties:
+        submitter:
+          type: string
+          description: Discord Id of Staff Member Submitting Audit Log
+          example: 968312697403871232
+        log:
+          type: string
+          description: What Audit Log will be
+          example: First Officer Kara Kinda sucks not gonna lie
+    AuditLogResponse:
+      type: object
+      description: Audit Log Post Request Body
+      properties:
+        success:
+          type: string
+          description: Success Message
+          example: Log Submitted
+        entry:
+          type: object
+          description: Input of Request
+          properties:
+            submitter:
+              type: string
+              description: Discord Id of Staff Member Submitting Audit Log
+              example: 968312697403871232
+            log:
+              type: string
+              description: What Audit Log will be
+              example: First Officer Kara Kinda sucks not gonna lie
+    LimitedUser:
+      type: object
+      description: Limeted User Details
+      properties:
+        discord_id:
+          type: string
+          description: Discord ID Of User
+          example: 968312697403871232
+        discord_username:
+          type: string
+          description: Discord Username of User
+          example: First Officer Kara
+        callsign:
+          type: integer
+          description: TPC Callsign Of User
+          example: 1234
+        vatsim_cid:
+          type: string
+          description: VATSIM CID of User
+          example: 1234567
+        home_airport:
+          type: string
+          description: Home Airport of User
+          example: KPDX
+        charters_code:
+          type: string
+          description: Charters Code of User
+          example: ATAC
+        bio:
+          type: string
+          description: Users Bio
+          example: Hello! I like to code this website!
+        aircraftHangar:
+          type: array
+          description: List of aircraft Users Fly
+          items:
+            $ref: '#/components/schemas/AircraftHangar'
+
+    FullUser:
+      type: object
+      description: Full User Details
+      properties:
+        id:
+          type: string
+          description: Internal ID for User
+          example: 1f2f9e11-5201-45dd-806e-d465e320297c
+        discord_id:
+          type: string
+          description: Discord ID Of User
+          example: 968312697403871232
+        discord_username:
+          type: string
+          description: Discord Username of User
+          example: First Officer Kara
+        first_name:
+          type: string
+          description: First Name of User
+          example: Kennedy
+        last_name:
+          type: string
+          description: Last Name of User
+          example: Steve
+        callsign:
+          type: integer
+          description: TPC Callsign Of User
+          example: 1234
+        vatsim_cid:
+          type: string
+          description: VATSIM CID of User
+          example: 1234567
+        email:
+          type: string
+          description: Email of User
+          example: staff@thepilotclub.org
+        home_airport:
+          type: string
+          description: Home Airport of User
+          example: KPDX
+        charters_code:
+          type: string
+          description: Charters Code of User
+          example: ATAC
+        bio:
+          type: string
+          description: Bio of User
+          example: I love TPC
+        status:
+          type: string
+          description: Account Status of User
+          example: Active
+        aircraftHangar:
+          type: array
+          description: List of aircraft Users Fly
+          items:
+            $ref: '#/components/schemas/AircraftHangar'
+    AircraftHangar:
+      type: object
+      description: Aircraft Members Fly
+      properties:
+        icaoCode:
+          type: string
+          description: ICAO Code of Airplane
+          example: V22
+        aircraftName:
+          type: string
+          description: Name of aircraft
+          example: MV-22 Osprey
+    NewMember:
+      type: object
+      description: Request Body for Adding a new user
+      properties:
+        id:
+          type: string
+          description: Discord ID of New Member
+          example: 968312697403871232
+    AlreadyInFCP:
+      type: object
+      description: Already in FCP
+      properties:
+        detail:
+          type: string
+          description: detail of response
+          example: User Already In FCP
+
