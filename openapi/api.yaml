@@ -67,7 +67,7 @@ paths:
         - Quiz
       summary: Get Question By ID
       description: This returns the data for the queried question.
-      operationId: getQuestionById
+      operationId: UpdateQuestion
       security:
         - APIKey: [ ]
       requestBody:
