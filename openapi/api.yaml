@@ -32,38 +32,91 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/QuizResponse'
-#  /quiz/all:
-#    get:
-#      tags:
-#        - Quiz
-#      summary: Get All Questions
-#      description: Returns an Array of all the questions in our database
-#      operationId: getAll
-#      security:
-#        - APIKey: []
-#      responses:
-#        '200':
-#          $ref: '#/components/responses/AllQuizResponse'
-#  /quiz/new:
-#    post:
-#      tags:
-#        - Quiz
-#      summary: Add New Question
-#      description: Adds a new question to the quiz database.
-#      operationId: getUserCallsign
-#      parameters:
-#        - name: discord_id
-#          in: path
-#          description: Discord ID of User
-#          required: true
-#          schema:
-#            type: string
-#            example: 968312697403871232
-#      responses:
-#        '200':
-#          $ref: '#/components/responses/CallsignUsersResponse'
-#        '404':
-#          $ref: '#/components/responses/NotFoundResponse'
+  /quiz/all:
+    get:
+      tags:
+        - Quiz
+      summary: Get All Questions
+      description: This returns and array of all the questions in the database.
+      operationId: getAll
+      security:
+        - APIKey: [ ]
+      responses:
+        '200':
+          $ref: '#/components/responses/QuizResource'
+        '401':
+          $ref: '#/components/responses/UnauthedResponse'
+  /quiz/{id}:
+    get:
+      tags:
+        - Quiz
+      summary: Get Question By ID
+      description: This returns the data for the queried question.
+      operationId: getQuestionById
+      security:
+        - APIKey: [ ]
+      responses:
+        '200':
+          $ref: '#/components/responses/QuizResponse'
+        '401':
+          $ref: '#/components/responses/UnauthedResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    patch:
+      tags:
+        - Quiz
+      summary: Get Question By ID
+      description: This returns the data for the queried question.
+      operationId: getQuestionById
+      security:
+        - APIKey: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Quiz'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Success:
+                    type: string
+                    description: Success Message
+                    example: Question Updated
+                  Question:
+                    $ref: '#/components/schemas/Quiz'
+        '401':
+          $ref: '#/components/responses/UnauthedResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    delete:
+      tags:
+        - Quiz
+      summary: Delete Question By ID
+      description: This Deletes a question from our database.
+      operationId: deleteQuestion
+      security:
+        - APIKey: [ ]
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Success:
+                    type: string
+                    description: Success Message
+                    example: Question Updated
+        '401':
+          $ref: '#/components/responses/UnauthedResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
 components:
   securitySchemes:
     APIKey:
@@ -90,6 +143,17 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Quiz'
+    QuizResource:
+      description: Quiz Question Full
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuizFull'
   schemas:
     NotFound:
       type: object
@@ -131,4 +195,36 @@ components:
           type: string
           description: the correct answer
           example: B
+    QuizFull:
+      type: object
+      description: FBO Details
+      properties:
+        id:
+          type: string
+          description: id of the question
+          example: 0e0873db-2ba5-4b29-a400-5177f8d2918f
+        question:
+          type: string
+          description: question
+          example: What kind of cheese does Eric Like?
+        optionA:
+          type: string
+          description: option a
+          example: Swiss
+        optionB:
+          type: string
+          description: option b
+          example: Cheddar
+        optionC:
+          type: string
+          description: option c
+          example: Colby Jack
+        correctAnswer:
+          type: string
+          description: the correct answer
+          example: B
+        isActive:
+          type: number
+          description: is the question active
+          example: 0
 
