@@ -18,6 +18,17 @@ const apis = {
       },
     ],
   },
+  internal_api: {
+    slug: 'internal-api',
+    title: 'Discord Bot API',
+    versions: [
+      {
+        version: '1.0.0',
+        label: 'v1',
+        spec: 'openapi/api.yaml',
+      },
+    ],
+  }
 };
 
 

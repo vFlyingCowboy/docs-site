@@ -1,0 +1,230 @@
+openapi: 3.0.3
+info:
+  title: The Pilot Club Discord Bot API
+  version: 1.0.0
+  termsOfService: https://www.thepilotclub.org/legal#TOS
+  contact:
+    email: webdev@thepilotcblub.org
+    name: The Pilot Club Web Development Team
+servers:
+  - url: https://api.thepilotclub.org/
+    description: Production
+paths:
+  /quiz/current:
+    get:
+      tags:
+        - Quiz
+      summary: Get Current Question
+      description: This returns the data for the current question
+      operationId: findCurrent
+      responses:
+        '200':
+          $ref: '#/components/responses/QuizResponse'
+  /quiz/random:
+    get:
+      tags:
+        - Quiz
+      summary: Get Random Question
+      description: This returns a random question. For authenticated users, it will over ride the current question.
+      operationId: getRandom
+      security:
+        - APIKey: []
+      responses:
+        '200':
+          $ref: '#/components/responses/QuizResponse'
+  /quiz/all:
+    get:
+      tags:
+        - Quiz
+      summary: Get All Questions
+      description: This returns and array of all the questions in the database.
+      operationId: getAll
+      security:
+        - APIKey: [ ]
+      responses:
+        '200':
+          $ref: '#/components/responses/QuizResource'
+        '401':
+          $ref: '#/components/responses/UnauthedResponse'
+  /quiz/{id}:
+    get:
+      tags:
+        - Quiz
+      summary: Get Question By ID
+      description: This returns the data for the queried question.
+      operationId: getQuestionById
+      security:
+        - APIKey: [ ]
+      responses:
+        '200':
+          $ref: '#/components/responses/QuizResponse'
+        '401':
+          $ref: '#/components/responses/UnauthedResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    patch:
+      tags:
+        - Quiz
+      summary: Get Question By ID
+      description: This returns the data for the queried question.
+      operationId: getQuestionById
+      security:
+        - APIKey: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Quiz'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Success:
+                    type: string
+                    description: Success Message
+                    example: Question Updated
+                  Question:
+                    $ref: '#/components/schemas/Quiz'
+        '401':
+          $ref: '#/components/responses/UnauthedResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    delete:
+      tags:
+        - Quiz
+      summary: Delete Question By ID
+      description: This Deletes a question from our database.
+      operationId: deleteQuestion
+      security:
+        - APIKey: [ ]
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Success:
+                    type: string
+                    description: Success Message
+                    example: Question Updated
+        '401':
+          $ref: '#/components/responses/UnauthedResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+components:
+  securitySchemes:
+    APIKey:
+      type: http
+      description: Bearer Token
+      scheme: bearer
+  responses:
+    NotFoundResponse:
+      description: Resource Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotFound'
+    UnauthedResponse:
+      description: Not Authorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Unauthed'
+
+    QuizResponse:
+      description: Quiz Question
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Quiz'
+    QuizResource:
+      description: Quiz Question Full
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuizFull'
+  schemas:
+    NotFound:
+      type: object
+      description: Not Found
+      properties:
+        detail:
+          type: string
+          description: Object Not being found
+          example: Not Found
+    Unauthed:
+      type: object
+      description: Not Authorized
+      properties:
+        message:
+          type: string
+          description: Resource has not been authenticated
+          example: Unauthenticated
+    Quiz:
+      type: object
+      description: FBO Details
+      properties:
+        question:
+          type: string
+          description: question
+          example: What kind of cheese does Eric Like?
+        optionA:
+          type: string
+          description: option a
+          example: Swiss
+        optionB:
+          type: string
+          description: option b
+          example: Cheddar
+        optionC:
+          type: string
+          description: option c
+          example: Colby Jack
+        correctAnswer:
+          type: string
+          description: the correct answer
+          example: B
+    QuizFull:
+      type: object
+      description: FBO Details
+      properties:
+        id:
+          type: string
+          description: id of the question
+          example: 0e0873db-2ba5-4b29-a400-5177f8d2918f
+        question:
+          type: string
+          description: question
+          example: What kind of cheese does Eric Like?
+        optionA:
+          type: string
+          description: option a
+          example: Swiss
+        optionB:
+          type: string
+          description: option b
+          example: Cheddar
+        optionC:
+          type: string
+          description: option c
+          example: Colby Jack
+        correctAnswer:
+          type: string
+          description: the correct answer
+          example: B
+        isActive:
+          type: number
+          description: is the question active
+          example: 0
+
