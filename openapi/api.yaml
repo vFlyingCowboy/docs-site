@@ -7,7 +7,7 @@ info:
     email: webdev@thepilotcblub.org
     name: The Pilot Club Web Development Team
 servers:
-  - url: https://api.thepilotclub.org
+  - url: https://api.thepilotclub.org/api
     description: Production
 paths:
   /quiz/current:
