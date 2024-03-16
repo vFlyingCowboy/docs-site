@@ -20,15 +20,25 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/QuizResponse'
+  /quiz/next:
+    get:
+      tags:
+        - Quiz
+      summary: Get Next Question
+      description: This returns the data for the next days question
+      operationId: findNext
+      security:
+        - APIKey: [ ]
+      responses:
+        '200':
+          $ref: '#/components/responses/QuizResponse'
   /quiz/random:
     get:
       tags:
         - Quiz
       summary: Get Random Question
-      description: This returns a random question. For authenticated users, it will over ride the current question.
+      description: This returns a random question.
       operationId: getRandom
-      security:
-        - APIKey: []
       responses:
         '200':
           $ref: '#/components/responses/QuizResponse'
