@@ -25,7 +25,22 @@ Let’s make this Club a great place for flightsim enthusiasts to be a part of
 2. Acts a delegate to the Dev Team Lead and has the same responsibilities as such.
 
 ### 1.3 Development Team Member
-1. Aids Dev Team lead and Deputy Dev Team Lead by developing code and projects to an acceptable level for The Pilot Club Production environment.
+1. Aid the Dev Team lead and Deputy Dev Team Lead by developing code and projects to an acceptable level for The Pilot Club Production environment.
+
+2. Developers are expected to put aside at least 2 hours per week to work on TPC related web services.
+
+3. Each developer will be assigned to a team from the following list. Developers may request to put on a team but the Dev Team Lead / Deputy Dev Team Lead may assign them to another team based on experience.
+
+    1. Discord Bot Team
+    2. Core API Team
+    3. Flight Crew Portal Team
+    4. Database Management and Outline team
+    5. Quality Assurance Team
+    6. Devops Team
+    7. Trust and Safety Team
+    8. Floater / Misc Team 
+   
+4. The outline for each one of these teams can be found in the Teams Folder of this section.
 
 ## 2. Development Processes
 
@@ -34,7 +49,7 @@ Let’s make this Club a great place for flightsim enthusiasts to be a part of
 
 2. Should any member of the Dev Team wish to propose a project, they should first ask the Deputy Dev Team Lead and/or Dev Team Lead to verify that project can and will improve The Pilot Club web service footprint.
 
-3. After Approval, members should refer to Section 2.2 of this document for development process.
+3. After Approval, members should refer to Section 2.2 of this document for the development process.
 
 4. Should the project need a new DNS record added to the domain and/or need SSO credentials, the Dev Team Lead shall execute those requests within 48 hours of request, once approval from the TPC Founder has been received.
 
