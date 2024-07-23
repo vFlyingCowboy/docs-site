@@ -42,6 +42,8 @@ Let’s make this Club a great place for flightsim enthusiasts to be a part of
    
 4. The outline for each one of these teams can be found in the Teams Folder of this section.
 
+5. To join the Dev Team, developers should look in [Section 4](#4-new-team-members) of this document. 
+
 ## 2. Development Processes
 
 ### 2.1 Project Conception
