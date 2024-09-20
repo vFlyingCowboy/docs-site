@@ -366,11 +366,15 @@ components:
       type: object
       description: Audit Log Post Request Body
       properties:
-        submitter:
+        user_id:
           type: string
           description: Discord Id of Staff Member Submitting Audit Log
           example: 968312697403871232
-        log:
+        submitted_by:
+          type: string
+          description: Discord Id of Staff Member Submitting Audit Log
+          example: 968312697403871232
+        text:
           type: string
           description: What Audit Log will be
           example: First Officer Kara Kinda sucks not gonna lie
