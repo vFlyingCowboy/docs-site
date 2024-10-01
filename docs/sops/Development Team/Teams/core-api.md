@@ -14,4 +14,4 @@ sidebar_position: 2
 
 ## Outline
 
-The purpose of the Core API Team is to develop and maintain The Pilot Clubs Core API. The API is written in TypeScript so members should be able to use the language without any major intervention.
+The purpose of the Core API Team is to develop and maintain The Pilot Clubs Core API. The API is written in TypeScript, so members should be able to use the language without any major intervention.
