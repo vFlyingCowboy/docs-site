@@ -10,30 +10,30 @@ The Commands are as follows:
 
 ## Slash Commands (First Officer Kara)
 ### Admin
-- __/report__ _{user} {reason}_
+- __/report__ _(user) (reason)_
   - Report a user
 
 ### Charters
-- __/charters-booking__ _{airline-code} {tail-number} {starting-icao} {ending-icao} {booking-begins} {booking-ends}_
+- __/charters-booking__ _(airline-code) (tail-number) (starting-icao) (ending-icao) (booking-begins) (booking-ends)_
   - Book an aircraft (TPC Charters)
 
-- __/charters-aircraft-request__ _{airline-code} {aircraft-type} {seating-config} {starting-location}_
+- __/charters-aircraft-request__ _(airline-code) (aircraft-type) (seating-config) (starting-location)_
   - Request an aircraft (TPC Charters)
 
-- __/charters-join__ _{airline-code} {home-base} {aircraft} {seating}_
+- __/charters-join__ _(airline-code) (home-base) (aircraft) (seating)_
   - Join TPC Charters
 
-- __/charters-ferry-request__ _{aircraft-registration} {starting-icao} {ending-icao}_
+- __/charters-ferry-request__ _(aircraft-registration) (starting-icao) (ending-icao)_
   - Ferry an aircraft from one location to another
 
 ### FCP
 - __/flight-crew-portal__
   - Sends the link to FCP
 
-- __/get-callsign__ _{user}_
+- __/get-callsign__ _(user)_
   - Get a users TPC callsign
 
-- __/member-info__ _{user}_
+- __/member-info__ _(user)_
   - Get a member's FCP info
 
 ### Fun
@@ -63,20 +63,20 @@ The Commands are as follows:
 - __/training-faq__
   - Replies with training information
 
-- __/training-request__ _{name} {cid} {course} {time}_
+- __/training-request__ _(name) (cid) (course) (time)_
   - Request impromptu training
 
 ### Util
-- __/airport__ _{icao}_
+- __/airport__ _(icao)_
   - Gets information for a given airport
 
-- __/charts__ _{icao}_
+- __/charts__ _(icao)_
   - Gets charts for a given airport
 
-- __/metar__ _{icao}_
+- __/metar__ _(icao)_
   - Get the METAR for a given airport
 
-- __/taf__ _{icao}_
+- __/taf__ _(icao)_
   - Get the TAF for a given airport
 
 ### VATSIM

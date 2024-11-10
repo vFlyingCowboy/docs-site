@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: The Pilot Club Discord Bot API
+  title: The Pilot Club Discord-Bot API
   version: 1.0.0
   termsOfService: https://www.thepilotclub.org/legal#TOS
   contact:

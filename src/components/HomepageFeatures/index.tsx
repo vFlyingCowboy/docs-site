@@ -1,5 +1,8 @@
+// @ts-ignore
 import React from 'react';
+// @ts-ignore
 import clsx from 'clsx';
+// @ts-ignore
 import styles from './styles.module.css';
 
 const FeatureList = [

@@ -1,10 +1,17 @@
+// @ts-ignore
 import React from 'react';
+// @ts-ignore
 import clsx from 'clsx';
+// @ts-ignore
 import Link from '@docusaurus/Link';
+// @ts-ignore
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+// @ts-ignore
 import Layout from '@theme/Layout';
+// @ts-ignore
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 
+// @ts-ignore
 import styles from './index.module.css';
 
 function HomepageHeader() {

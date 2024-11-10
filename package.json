@@ -21,18 +21,18 @@
     "re-gen": "npm run clean-all-api-docs && npm run gen-all-api-docs"
   },
   "dependencies": {
-    "@docusaurus/core": "^2.4.3",
-    "@docusaurus/preset-classic": "^2.4.3",
-    "@mdx-js/react": "^1.6.22",
-    "clsx": "^1.2.1",
-    "docusaurus-plugin-openapi-docs": "^2.0.0-beta.3",
-    "docusaurus-theme-openapi-docs": "^2.0.0-beta.3",
-    "prism-react-renderer": "^1.3.5",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "@docusaurus/core": "^3.6.1",
+    "@docusaurus/preset-classic": "^3.6.1",
+    "@mdx-js/react": "^3.1.0",
+    "clsx": "^2.1.1",
+    "docusaurus-plugin-openapi-docs": "^4.2.0",
+    "docusaurus-theme-openapi-docs": "^4.2.0",
+    "prism-react-renderer": "^2.4.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^2.4.3"
+    "@docusaurus/module-type-aliases": "^3.6.1"
   },
   "overrides": {
     "react-live": ">=3.1.1 <4.1.0"
